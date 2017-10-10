@@ -1,0 +1,39 @@
+set PATH=%PATH%;C:\kafka_2.11-0.11.0.1\bin\windows
+
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+
+kafka-topics.bat --list --zookeeper localhost:2181
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic test
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test --from-beginning
+
+
+--property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+
+--property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+--property value.deserializer=org.apache.kafka.common.serialization.DoubleDeserializer
+--property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
+
+
+
+### App Specific Energy Producer
+
+# 5 min topic
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic energy5mins
+kafka-topics.bat --delete --zookeeper localhost:2181 --topic energy5mins
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic energy5mins --from-beginning
+
+# hourly topic
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic energyhourly
+kafka-topics.bat --delete --zookeeper localhost:2181 --topic energyhourly
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic energyhourly --from-beginning
+
+
+# daily topic
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic energydaily
+kafka-topics.bat --delete --zookeeper localhost:2181 --topic energydaily
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic energydaily --from-beginning
+
